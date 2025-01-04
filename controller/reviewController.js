@@ -45,8 +45,7 @@ export function addReview(req,res){
         const email=req.params.email;
 
         if(req.user==null){
-            res.status(401).json
-            ({message:"please login and try again"});
+            res.status(401).json ({message:"please login and try again"});
             return
         }
 
@@ -75,3 +74,27 @@ export function addReview(req,res){
       
     }
     }
+
+    export function approveReview(req,res){
+        const email=req.params.email;
+
+        if(req.user == null){
+            res.status(401).json ({message:"please login and try again"});
+            return
+        }
+
+        if(req.user.role=="admin"){
+            Review.updateOne({
+                email:email,
+            },{
+                isApproved:true,
+            }).then(()=>{
+                res.json({message:"review approved successfully"});
+            }).catch(()=>{
+                res.status(500).json({error:"review approvel failed"});
+                })
+            }else{
+                res.status(403).json({message:"you are not and admin. only admins can approve the reviews"})
+            }
+    }
+    
