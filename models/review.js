@@ -23,6 +23,11 @@ const reviewSchema = new mongoose.Schema({
         required:true,
         default: Date.now()
     },
+    profilePicture:{
+        type:String,
+        required:true,
+        default:"https://img.freepik.com/premium-vector/gray-avatar-icon-vector-illustration_276184-163.jpg?semt=ais_hybrid"
+    },
     isApproved:{
         type:Boolean,
         required:true,
