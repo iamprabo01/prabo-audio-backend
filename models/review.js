@@ -22,6 +22,11 @@ const reviewSchema = new mongoose.Schema({
         type:Date,
         required:true,
         default: Date.now()
+    },
+    isApproved:{
+        type:Boolean,
+        required:true,
+        default:false
     }
 })
 
