@@ -21,7 +21,7 @@ app.use((req,res,next)=>{
         console.log(token)
        
 
-        jwt.verify(token,"kvsecret89",
+        jwt.verify(token,process.env.JWT_SECRET,
         (err,decoded)=>{
             if(!err){
                 req.user=decoded;
