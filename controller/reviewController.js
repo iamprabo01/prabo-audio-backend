@@ -1,7 +1,7 @@
-import Review from "../models/review";
+import Review from "../models/review.js";
 
 export function addReview(req,res){
-    if(req,user==null){
+    if(req.user==null){
         res.status(401).json({
             message:"please login and try again",
         });
@@ -22,3 +22,20 @@ export function addReview(req,res){
         res,status(500).json({message:"review addition failed"})
     });
 }
+
+    export function getReviews(req,res){
+
+        const user =req.user;
+
+        if (user==null || user.role !="admin"){
+            Review.find({isApproved :true}).then((reviews)=>{
+                res.json(reviews);
+            })
+            return
+        }
+        if(user.role=="admin"){
+            Review.find().then((reviews)=>{
+                res.json(reviews);
+            })
+        }
+    }
