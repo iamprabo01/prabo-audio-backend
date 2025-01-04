@@ -43,11 +43,35 @@ export function addReview(req,res){
     export function deleteReview (req,res){
 
         const email=req.params.email;
-        Review.deleteOne
-        ({email:email}).then(()=>{
-            res.json({message:"review deleted successfully"});
 
-        }).catch(()=>{
-            res.status(500).json({message:"review deletion failed"})
-        })
+        if(req.user==null){
+            res.status(401).json
+            ({message:"please login and try again"});
+            return
+        }
+
+        if(req.user.role =="admin"){
+            Review.deleteOne
+            ({email:email}).then(()=>{
+                res.json({message:"review deleted successfully"})
+            }).catch(()=>{
+                res.status(500).json({message:"review deletion failed"});
+            })
+            return
+        }
+
+        if(req.user.role=="customer"){
+            if(req.user.email==email){
+                Review.deleteOne
+                ({email:email}).then(()=>{
+                    res.json({message:"review deleted successfully"});
+        
+                }).catch(()=>{
+                    res.status(500).json({message:"review deletion failed"})
+                });
+        }else{
+            res.status(403).json({message:"you are not authorized for perform this action"})
+        }
+      
+    }
     }
