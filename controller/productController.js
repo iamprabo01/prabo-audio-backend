@@ -53,10 +53,11 @@ export async function getProducts(req,res) {
 export async function updateProduct(req,res){
     try{
         if(isItAdmin(req)){
+            
             const key = req.params.key;
             const data = req.body
             await Product.updateOne({key:key},data)
-
+        
             res.json({
                 message:"product updated successfully"
             })
@@ -71,6 +72,29 @@ export async function updateProduct(req,res){
     }catch(e){
         res.status(500).json({
             message:"failed to get products"
+        })
+    }
+}
+
+export async function deleteProduct(req,res){
+    try{ 
+        if(isItAdmin(req)){
+            const key = req.params.key;
+            await Product.deleteOne({key:key})
+            res.json({
+                message:"product deleted successfully"
+            })
+            return;
+        }else{
+            res.status(403).json({
+                message:"you are not authorized to perform this action"
+            })
+            return;
+        }
+
+    }catch(e){
+        res.status(500).json({
+            message:"failed to delete product"
         })
     }
 }

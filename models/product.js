@@ -37,6 +37,12 @@ const productSchema= new mongoose.Schema({
         type:Boolean,
         required:true,
         default:true
+    },
+
+    image:{
+        type:String,
+        required:true,
+        default:"https://img.freepik.com/premium-vector/gray-avatar-icon-vector-illustration_276184-163.jpg?semt=ais_hybrid"
     }
 });
 
