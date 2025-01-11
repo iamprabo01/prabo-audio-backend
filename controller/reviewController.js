@@ -19,14 +19,15 @@ export function addReview(req,res){
     newReview.save().then(()=>{
         res.json({message:"review added successfully"});
     }).catch(()=>{
-        res,status(500).json({message:"review addition failed"})
+        res.status(500).json({message:"review addition failed"})
     });
 }
 
-    export function getReviews(req,res){
+    export async function getReviews(req,res){
 
         const user =req.user;
 
+        /* before add the await and async function
         if (user==null || user.role !="admin"){
             Review.find({isApproved :true}).then((reviews)=>{
                 res.json(reviews);
@@ -37,6 +38,18 @@ export function addReview(req,res){
             Review.find().then((reviews)=>{
                 res.json(reviews);
             })
+        }*/
+
+        try{
+            if(user.role=="admin"){
+                const reviews = await Review.find();
+                res.json(reviews);
+            }else{
+                const reviews = await Review.find({isApproved:true});
+                res.json(reviews);
+            }
+        }catch(error){
+            res.status(500).json({error:"failed to get reviews"});
         }
     }
 
