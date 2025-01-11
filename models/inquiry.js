@@ -6,7 +6,7 @@ const inquirySchema = new mongoose.Schema({
         type:Number,
         required:true,
         unique:true
-    }
+    },
     email:{
         type:String,
         required:true,
@@ -24,9 +24,9 @@ const inquirySchema = new mongoose.Schema({
     },
 
     date:{
-        type:date,
+        type:Date,
         required:true,
-        default:date.now()
+        default:Date.now()
     },
 
     response:{
