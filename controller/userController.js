@@ -40,7 +40,7 @@ export function loginUser(req,res){
                         email:user.email,
                         role:user.role,
                         profilePicture:user.profilePicture,
-                        phone:user.phone
+                        phoneNumber:user.phoneNumber
 
                     },process.env.JWT_SECRET)
                    
@@ -70,7 +70,7 @@ export function isItCustomer(req){
     let isCustomer = false;
 
     if(req.user !=null){
-        if(req.user.role =="admin"){
+        if(req.user.role =="customer"){
             isCustomer=true;
         }
     }
